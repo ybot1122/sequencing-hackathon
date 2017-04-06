@@ -26,7 +26,8 @@ class UsageExample(object):
         beacon_result = self.chains.getPublicBeacon(1, 2, 'A')
         return beacon_result
 
-    def get_raw_report_test(self, fileId):
+    def get_raw_report_test(self, fileId, accessToken):
+        self.chains.setToken(accessToken)
         chains_raw_result = self.chains.getRawReport(
             'StartApp', 'Chain12', fileId)
         return chains_raw_result
@@ -79,10 +80,12 @@ class RequestHandler(BaseHTTPRequestHandler):
     else:
         print self.path
 
-    fileId = self.path.split('?id=')[1]
+    fileId = self.path.split('&id=')[1]
+    accessToken = self.path.split('&id=')[0].split('?token=')[1]
+    print accessToken
     print fileId
 
-    data = UsageExample().get_raw_report_test(fileId)
+    data = UsageExample().get_raw_report_test(fileId, accessToken)
 
     self.send_response(200)
     self.send_header('Content-type', 'application/json')

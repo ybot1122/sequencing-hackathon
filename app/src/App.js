@@ -9,6 +9,7 @@ class App extends Component {
     super(props);
     this.state = {
       loggedIn: null,
+      profile: null
     };
   }
 
@@ -19,6 +20,14 @@ class App extends Component {
       accessToken = qs.replace("?access_token=", "");
     }
     this.setState({ loggedIn: accessToken });
+  }
+
+  viewProfileCallback(id, name, response) {
+    this.setState({
+      profile: {
+        id, name, response
+      }
+    });
   }
 
   render() {
@@ -33,8 +42,10 @@ class App extends Component {
 
     if (!this.state.loggedIn) {
       return <LoginScreen />;
+    } else if (!this.state.profile) {
+      return <ProfileSelector accessToken={this.state.loggedIn} />;
     } else {
-      return <ProfileSelector />;
+      return <h1>{this.state.profile.name}</h1>;
     }
   }
 }

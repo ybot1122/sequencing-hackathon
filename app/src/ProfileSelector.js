@@ -16,10 +16,14 @@ const profiles = [
 ];
 
 class ProfileSelector extends Component {
+  constructor(props) {
+    super(props);
+    this.fetchForId = this.fetchForId.bind(this);
+  }
 
   fetchForId(id) {
     return () => {
-      fetch('http://localhost:4000?id=' + id)
+      fetch('http://localhost:4000?token=' + this.props.accessToken + '&id=' + id)
         .then(function(response) {
           return response.json()
         }).then(function(json) {

@@ -186,6 +186,11 @@ class AppChains(object):
         if hostname:
             self.hostname = hostname
 
+    def setToken(self, token):
+        self.token = token
+        print self.token
+        return
+
     #: High level public API
     def getReport(self, remote_method_name, app_method_name, source_id):
         """Requests report
