@@ -51,25 +51,28 @@ class UsageExample(object):
                 ))
                 v.saveTo('/tmp')
 
-    def get_report_batch_test(self):
+    def get_report_batch_test(self, fileId, accessToken):
+        self.chains.setToken(accessToken)
+        result = []
         chains_results = self.chains.getReportBatch(
-            'StartAppBatch', {'Chain85': '227680', 'Chain88': '227680'})
+            'StartAppBatch', {'Chain85': fileId, 'Chain88': fileId, 'Chain12': fileId})
         for chains_result in chains_results:
             if chains_results[chains_result].isSucceeded():
                 print('Request has succeeded')
             else:
                 print('Request has failed')
             for r in chains_results[chains_result].getResults():
-                file_type = r.getValue().getType()
+                item = { 'type': '', 'name': '', 'data': '' }
                 v = r.getValue()
-                if file_type == 'TEXT':
+                file_type = v.getType()
+                if file_type == 'TEXT' and r.getName() == 'result':
+                    item['type'] = 'text'
+                    item['name'] = r.getName()
+                    item['data'] = v.getData()
                     print('-> text result type {} = {}'.format(
                         r.getName(), v.getData()))
-                elif file_type == 'FILE':
-                    print(' -> file result type {} = {}'.format(
-                        r.getName(), v.getUrl()
-                    ))
-                    v.saveTo('/tmp')
+                    result.append(item)
+        return result
 
 class RequestHandler(BaseHTTPRequestHandler):
   #Handler for the GET requests
@@ -85,7 +88,7 @@ class RequestHandler(BaseHTTPRequestHandler):
     print accessToken
     print fileId
 
-    data = UsageExample().get_raw_report_test(fileId, accessToken)
+    data = UsageExample().get_report_batch_test(fileId, accessToken)
 
     self.send_response(200)
     self.send_header('Content-type', 'application/json')

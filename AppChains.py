@@ -340,6 +340,7 @@ class AppChains(object):
         """Handles raw report result by transforming it to user friendly state"""
         results = []
         for result_prop in raw_result.getResultProps():
+            print result_prop
             types = result_prop.get('Type')
             result_prop_value = result_prop.get('Value')
             result_prop_name = result_prop.get('Name')
