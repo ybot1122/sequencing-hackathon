@@ -4,9 +4,8 @@ from __future__ import unicode_literals
 from AppChains import AppChains
 
 class UsageExample(object):
-    secret = 'fMoBS4UvQ2EYxYSv49Zdd3yRE5kw5QpGsxJQxvU2JiC8P2XSuTm9aXDfJueVhSZox1faIus8NBxfrQ8Ed6QaYw'
     url = 'api.sequencing.com'
-    token = '95342d5475f92495e87703eddc62853a285a8a58' # SHORT-LIVED and also to a service IDGAF about and doesnt have my credit card anyways
+    token = '41ba0ee245c588570ae9a287e53b4188e32b3d0b' # SHORT-LIVED and also to a service IDGAF about and doesnt have my credit card anyways
 
     def __init__(self):
         self.chains = AppChains(self.token, self.url)
