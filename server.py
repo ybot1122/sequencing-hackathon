@@ -3,16 +3,23 @@ from __future__ import unicode_literals
 
 from AppChains import AppChains
 
+from BaseHTTPServer import BaseHTTPRequestHandler,HTTPServer
+from urlparse import urlparse
+import requests
+import json
+
+PORT = 4000
+
 class UsageExample(object):
     url = 'api.sequencing.com'
-    token = '41ba0ee245c588570ae9a287e53b4188e32b3d0b' # SHORT-LIVED and also to a service IDGAF about and doesnt have my credit card anyways
+    token = 'b916754b6eee4c3c6266b029be3b26126a2d259f' # SHORT-LIVED and also to a service IDGAF about and doesnt have my credit card anyways
 
     def __init__(self):
         self.chains = AppChains(self.token, self.url)
         #print(self.get_public_beacon_test())
-        print(self.get_raw_report_test())
-        self.get_report_test()
-        self.get_report_batch_test()
+        #print(self.get_raw_report_test())
+        #self.get_report_test()
+        #self.get_report_batch_test()
 
 
     def get_public_beacon_test(self):
@@ -63,4 +70,30 @@ class UsageExample(object):
                     ))
                     v.saveTo('/tmp')
 
-UsageExample()
+class RequestHandler(BaseHTTPRequestHandler):
+  #Handler for the GET requests
+
+  def do_GET(self):
+    data = UsageExample().get_raw_report_test()
+
+    self.send_response(200)
+    self.send_header('Content-type', 'application/json')
+    self.send_header('Access-Control-Allow-Origin', '*')
+    self.send_header('Access-Control-Allow-Headers', '*')
+    self.send_header('Access-Control-Allow-Methods', '*')
+    self.end_headers()
+    self.wfile.write(json.dumps(data))
+    return
+
+try:
+  #Create a web server and define the handler to manage the
+  #incoming request
+  server = HTTPServer(('', PORT), RequestHandler)
+  print 'Started httpserver on port ' , PORT
+  
+  #Wait forever for incoming htto requests
+  server.serve_forever()
+
+except KeyboardInterrupt:
+  print '^C received, shutting down the web server'
+  server.socket.close()
