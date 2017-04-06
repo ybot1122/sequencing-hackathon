@@ -6,7 +6,7 @@ from AppChains import AppChains
 class UsageExample(object):
     secret = 'fMoBS4UvQ2EYxYSv49Zdd3yRE5kw5QpGsxJQxvU2JiC8P2XSuTm9aXDfJueVhSZox1faIus8NBxfrQ8Ed6QaYw'
     url = 'api.sequencing.com'
-    token = ''
+    token = 'ea79b4f53b913ef56d4bd70ca59ab1b06de77395' # SHORT-LIVED and also to a service IDGAF about and doesnt have my credit card anyways
 
     def __init__(self):
         self.chains = AppChains(self.token, self.url)
