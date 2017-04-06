@@ -523,6 +523,9 @@ class AppChains(object):
         """
         headers = self.getHeaders()
         request = urllib2.Request(url=url, data=body, headers=headers)
+        print url
+        print body
+        print headers
         try:
             request = urllib2.urlopen(request)
         except urllib2.HTTPError as e:
