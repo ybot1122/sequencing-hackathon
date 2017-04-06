@@ -16,8 +16,8 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+          <h2><a href="https://sequencing.com/oauth2/authorize?redirect_uri=http://localhost:2000&response_type=code&state=STATE&client_id=TobyHackathonAppDemo&scope=demo
+">LOGIN</a></h2>
         </div>
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
