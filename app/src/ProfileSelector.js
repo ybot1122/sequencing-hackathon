@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 const profiles = [
   { name: "Homer", id: 227679 },
-  { name: "Mage", id: 227628 },
+  { name: "Marge", id: 227628 },
   { name: "Bart", id: 237697 },
   { name: "Lisa", id: 237689 },
   { name: "Maggie", id: 237691 },
@@ -19,10 +19,16 @@ class ProfileSelector extends Component {
   constructor(props) {
     super(props);
     this.fetchForId = this.fetchForId.bind(this);
+    this.state = {
+      isLoading: false
+    }
   }
 
   fetchForId(id, name) {
     return () => {
+      this.setState({
+        isLoading: true
+      });
       fetch('http://localhost:4000?token=' + this.props.accessToken + '&id=' + id)
         .then((response) => {
           return response.json()
@@ -45,6 +51,14 @@ class ProfileSelector extends Component {
   }
 
   render() {
+    if (this.state.isLoading) {
+      return (
+        <div className="App">
+          FAKE LOADER
+        </div>
+      );
+    }
+
     return (
       <div className="App">
         <h1>Welcome back Toby!</h1>
