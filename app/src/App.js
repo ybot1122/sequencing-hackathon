@@ -7,6 +7,7 @@ import './App.css';
 class App extends Component {
   constructor(props) {
     super(props);
+    this.viewProfileCallback = this.viewProfileCallback.bind(this);
     this.state = {
       loggedIn: null,
       profile: null
@@ -42,8 +43,14 @@ class App extends Component {
 
     if (!this.state.loggedIn) {
       return <LoginScreen />;
-    } else if (!this.state.profile) {
-      return <ProfileSelector accessToken={this.state.loggedIn} />;
+    }
+
+    if (!this.state.profile) {
+      return (
+        <ProfileSelector
+          accessToken={this.state.loggedIn}
+          viewProfileCallback={this.viewProfileCallback} />
+      );
     } else {
       return <h1>{this.state.profile.name}</h1>;
     }

@@ -21,13 +21,13 @@ class ProfileSelector extends Component {
     this.fetchForId = this.fetchForId.bind(this);
   }
 
-  fetchForId(id) {
+  fetchForId(id, name) {
     return () => {
       fetch('http://localhost:4000?token=' + this.props.accessToken + '&id=' + id)
-        .then(function(response) {
+        .then((response) => {
           return response.json()
-        }).then(function(json) {
-          console.log(json)
+        }).then((json) => {
+          this.props.viewProfileCallback(id, name, json);
         });
     }
   }
@@ -36,7 +36,7 @@ class ProfileSelector extends Component {
     const result = [];
     profiles.forEach((el) => {
       result.push(
-        <div className="profile" key={el.id} onClick={this.fetchForId(el.id)}>
+        <div className="profile" key={el.id} onClick={this.fetchForId(el.id, el.name)}>
           {el.name}
         </div>
       );
