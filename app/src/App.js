@@ -1,23 +1,9 @@
 import React, { Component } from 'react';
 import LoginScreen from './LoginScreen';
+import ProfileSelector from './ProfileSelector';
 import logo from './logo.svg';
 import parse from 'url-parse';
 import './App.css';
-
-const profiles = {
-  Homer: 227679,
-  Mage: 227628,
-  Bart: 237697,
-  Lisa: 237689,
-  Maggie: 237691,
-  Vito: 80605,
-  Genghis: 80602,
-  "Ba Shi Ba": 80599,
-  Oba: 80600,
-  Atiam: 141478,
-  Ugg: 80632,
-  Pebbles: 80633
-};
 
 class App extends Component {
   constructor(props) {
@@ -49,7 +35,7 @@ class App extends Component {
     if (!this.state.loggedIn) {
       return <LoginScreen />;
     } else {
-      return <h1>{this.state.loggedIn}</h1>;
+      return <ProfileSelector />;
     }
   }
 }
