@@ -33,3 +33,4 @@
 *.su
 
 **/node_modules/**
+*.pyc
