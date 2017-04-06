@@ -4,6 +4,15 @@ import './App.css';
 
 class App extends Component {
   render() {
+    fetch('http://localhost:9000/search/shows?q=girls')
+      .then(function(response) {
+        return response.json()
+      }).then(function(json) {
+        console.log('parsed json', json)
+      }).catch(function(ex) {
+        console.log('parsing failed', ex)
+      });
+
     return (
       <div className="App">
         <div className="App-header">
