@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import LoginScreen from './LoginScreen';
 import logo from './logo.svg';
+import parse from 'url-parse';
 import './App.css';
 
 const profiles = {
@@ -27,7 +28,12 @@ class App extends Component {
   }
 
   componentWillMount() {
-    
+    const qs = parse(window.location.href).query;
+    let accessToken;
+    if (qs) {
+      accessToken = qs.replace("?access_token=", "");
+    }
+    this.setState({ loggedIn: accessToken });
   }
 
   render() {
@@ -43,7 +49,7 @@ class App extends Component {
     if (!this.state.loggedIn) {
       return <LoginScreen />;
     } else {
-
+      return <h1>{this.state.loggedIn}</h1>;
     }
   }
 }
