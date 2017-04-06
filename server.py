@@ -26,9 +26,9 @@ class UsageExample(object):
         beacon_result = self.chains.getPublicBeacon(1, 2, 'A')
         return beacon_result
 
-    def get_raw_report_test(self):
+    def get_raw_report_test(self, fileId):
         chains_raw_result = self.chains.getRawReport(
-            'StartApp', 'Chain12', '227680')
+            'StartApp', 'Chain12', fileId)
         return chains_raw_result
 
     def get_report_test(self):
@@ -74,7 +74,15 @@ class RequestHandler(BaseHTTPRequestHandler):
   #Handler for the GET requests
 
   def do_GET(self):
-    data = UsageExample().get_raw_report_test()
+    if self.path == '/favicon.ico':
+        return
+    else:
+        print self.path
+
+    fileId = self.path.split('?id=')[1]
+    print fileId
+
+    data = UsageExample().get_raw_report_test(fileId)
 
     self.send_response(200)
     self.send_header('Content-type', 'application/json')

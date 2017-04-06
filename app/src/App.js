@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import LoginScreen from './LoginScreen';
 import ProfileSelector from './ProfileSelector';
-import logo from './logo.svg';
 import parse from 'url-parse';
 import './App.css';
 

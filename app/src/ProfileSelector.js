@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-const URL = "https://sequencing.com/oauth2/authorize?redirect_uri=http://localhost:2000&response_type=code&state=STATE&client_id=TobyHackathonAppDemo&scope=demo";
-
 const profiles = [
   { name: "Homer", id: 227679 },
   { name: "Mage", id: 227628 },
@@ -19,11 +17,22 @@ const profiles = [
 
 class ProfileSelector extends Component {
 
+  fetchForId(id) {
+    return () => {
+      fetch('http://localhost:4000?id=' + id)
+        .then(function(response) {
+          return response.json()
+        }).then(function(json) {
+          console.log(json)
+        });
+    }
+  }
+
   renderProfileTabs() {
     const result = [];
     profiles.forEach((el) => {
       result.push(
-        <div className="profile" key={el.id} onClick={() => console.log(el.id)}>
+        <div className="profile" key={el.id} onClick={this.fetchForId(el.id)}>
           {el.name}
         </div>
       );
